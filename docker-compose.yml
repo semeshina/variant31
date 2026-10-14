@@ -1,0 +1,53 @@
+# Имя проекта задано явно, чтобы не конфликтовать с одноимёнными проектами
+name: petcare-v31
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-petuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-petpass}
+      POSTGRES_DB: ${POSTGRES_DB:-pets_db}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web-service:
+    build: ./web-service
+    ports:
+      - "5002:5001"   # на хосте 5001 занят другим проектом, используем 5002
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:5001/api/health', timeout=3).status==200 else 1)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: ${POSTGRES_DB:-pets_db}
+      DB_USER: ${POSTGRES_USER:-petuser}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-petpass}
+      WEB_SERVICE_URL: http://web-service:5001
+    depends_on:
+      db:
+        condition: service_healthy
+      web-service:
+        condition: service_started
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8081:80"     # на хосте 8080 занят другим проектом, используем 8081
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

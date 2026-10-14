@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учет домашних животных — вариант 31</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🐾 Учет домашних животных</h1>
+        <p>Лабораторная работа «Контейнеризация многокомпонентных приложений с помощью Docker Compose»
+           — <strong>вариант 31</strong>: расчет нормы кормления по весу и возрасту питомца, медкарта и карточка питомца.</p>
+    </header>
+
+    <main>
+        <!-- ===== Кнопка 1: запрос данных из внутренней БД через Backend ===== -->
+        <section class="card">
+            <h2>Кнопка 1 · Карточки питомцев (данные из внутренней БД)</h2>
+            <p class="hint">Запрос к PostgreSQL через Backend: <code>GET /api/pets</code></p>
+            <button id="loadPetsBtn" class="btn primary">Показать моих питомцев</button>
+            <div id="petsTable"></div>
+        </section>
+
+        <!-- ===== Медкарта выбранного питомца ===== -->
+        <section class="card">
+            <h2>🩺 Медкарта питомца</h2>
+            <p class="hint">Выберите питомца в таблице выше — появится его медкарта (<code>GET /api/pets/{id}/medcard</code>)</p>
+            <div id="medcardBox" class="muted">Медкарта не выбрана.</div>
+        </section>
+
+        <!-- ===== Кнопка 2: запрос к специализированному Web-сервису ===== -->
+        <section class="card">
+            <h2>Кнопка 2 · Расчет нормы кормления (Web-сервис)</h2>
+            <p class="hint">Backend обращается к Web-сервису <code>/api/calculate</code> и сохраняет результат в БД
+               (<code>POST /api/feeding/calculate</code>)</p>
+            <div class="form-row">
+                <label for="petSelect">Питомец:</label>
+                <select id="petSelect">
+                    <option value="">— сначала загрузите питомцев —</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="weightInput">Вес, кг (пусто = из карточки):</label>
+                <input type="number" id="weightInput" step="0.1" min="0.1" placeholder="например, 12.5">
+            </div>
+            <div class="form-row">
+                <label for="ageInput">Возраст, лет (пусто = из карточки):</label>
+                <input type="number" id="ageInput" step="0.1" min="0" placeholder="например, 4">
+            </div>
+            <button id="calcBtn" class="btn accent">Рассчитать норму кормления</button>
+            <div id="resultBox" class="muted">Результат появится здесь.</div>
+        </section>
+
+        <!-- ===== История из БД ===== -->
+        <section class="card">
+            <h2>📒 История расчетов (из БД)</h2>
+            <p class="hint">Последние записи журнала <code>feeding_history</code> (<code>GET /api/feeding-history</code>)</p>
+            <button id="loadHistoryBtn" class="btn secondary">Обновить историю</button>
+            <div id="historyTable"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Компоненты: <strong>frontend</strong> (Nginx) · <strong>backend</strong> (Flask) ·
+           <strong>db</strong> (PostgreSQL) · <strong>web-service</strong> (калькулятор нормы кормления)</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

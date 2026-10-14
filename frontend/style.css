@@ -1,0 +1,132 @@
+/* Учет домашних животных — вариант 31 */
+:root {
+    --bg: #f2f6f4;
+    --card: #ffffff;
+    --primary: #2e7d5b;
+    --accent: #e07b39;
+    --secondary: #4a6fa5;
+    --text: #24352e;
+    --border: #d8e2dc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+header {
+    background: linear-gradient(135deg, #2e7d5b, #1f5a41);
+    color: #fff;
+    padding: 24px 32px;
+}
+header h1 { margin: 0 0 8px; font-size: 26px; }
+header p { margin: 0; max-width: 900px; opacity: .92; }
+
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 20px;
+    padding: 24px 32px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.card h2 { margin: 0 0 6px; font-size: 18px; }
+
+.hint {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: #6b7f75;
+}
+code {
+    background: #eef3f0;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 12px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #fff;
+    transition: filter .15s;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn.primary   { background: var(--primary); }
+.btn.accent    { background: var(--accent); }
+.btn.secondary { background: var(--secondary); }
+.btn.small     { padding: 4px 10px; font-size: 13px; background: var(--secondary); }
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.form-row label { min-width: 240px; font-size: 14px; }
+.form-row input, .form-row select {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    font-size: 14px;
+}
+th, td {
+    border-bottom: 1px solid var(--border);
+    padding: 8px 10px;
+    text-align: left;
+}
+th { background: #f0f5f2; }
+
+.muted { color: #88998f; margin-top: 14px; font-size: 14px; }
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+.result-item {
+    background: #fdf3ea;
+    border: 1px solid #f3ddc6;
+    border-radius: 8px;
+    padding: 10px;
+}
+.result-item .value { font-size: 20px; font-weight: 600; color: var(--accent); }
+.result-item .label { font-size: 12px; color: #8a7259; }
+
+.advice {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #eef6f1;
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.error { color: #b03a2e; margin-top: 12px; font-size: 14px; }
+
+footer {
+    padding: 16px 32px 28px;
+    font-size: 13px;
+    color: #6b7f75;
+}

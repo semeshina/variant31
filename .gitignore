@@ -1,0 +1,24 @@
+# Окружения и зависимости
+.env
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# Логи и системные файлы
+*.log
+logs/
+.DS_Store
+Thumbs.db
+
+# Файлы сборки / IDE
+.idea/
+.vscode/
+*.iml
